@@ -1,26 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>For You 💖</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Will You Be My Girlfriend? 💖</title>
+  <style>
+    body {
+      background: pink;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+      position: relative;
+      width: 320px;
+    }
+    h1 {
+      margin-bottom: 30px;
+      color: hotpink;
+    }
+    button {
+      font-size: 16px;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+    #yesBtn {
+      background-color: hotpink;
+      color: white;
+    }
+    #yesBtn:hover {
+      background-color: deeppink;
+    }
+    #noBtn {
+      position: absolute;
+      background-color: lightgray;
+      color: #333;
+    }
+  </style>
 
-  <!-- EMAILJS -->
+  <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("PUBLIC_KEY_KAMU");
+      emailjs.init("9nsWohiHpDzc_ZYQF"); // Ganti dengan public key EmailJS kamu
     })();
   </script>
 </head>
 <body>
+  <div class="container">
+    <h1>Will you be my girlfriend? 💕</h1>
+    <button id="yesBtn" onclick="yesClicked()">Yes I do 💖</button>
+    <button id="noBtn">No, leave me alone</button>
+  </div>
 
-<div class="container center">
-  <h1>Will you be my girlfriend? 💕</h1>
+  <script>
+    // Bikin tombol "No" kabur-kaburan
+    const noBtn = document.getElementById("noBtn");
+    noBtn.style.left = "150px"; // posisi awal
+    noBtn.style.top = "80px";
+    noBtn.style.position = "absolute";
 
-  <button class="yes-btn" onclick="yesClicked()">Yes I do 💖</button>
-  <button class="no-btn" id="noBtn">No, leave me alone</button>
-</div>
+    noBtn.addEventListener("mouseenter", () => {
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+      const randX = Math.floor(Math.random() * maxX);
+      const randY = Math.floor(Math.random() * maxY);
+      noBtn.style.left = randX + "px";
+      noBtn.style.top = randY + "px";
+    });
 
-<script src="script.js"></script>
+    // Fungsi untuk kirim email saat klik "Yes I do"
+    function yesClicked() {
+      emailjs.send("service_punyavelien", "yes_clicked", {
+        to_email: "jevelientesalonika@gmail.com",   // Ganti dengan emailmu
+        message: "Dia klik YES I DO 💖",
+        time: new Date().toLocaleString()
+      }).then(() => {
+        console.log("Email berhasil dikirim!");
+      }).catch((error) => {
+        console.error("Gagal kirim email:", error);
+      });
+
+      // Lanjut ke halaman berikutnya (misal date.html)
+      window.location.href = "date.html";
+    }
+  </script>
 </body>
 </html>
