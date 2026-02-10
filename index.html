@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Girlfriend?</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      overflow: hidden;
+    }
+    .page {
+      display: none;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+    .active { display: flex; }
+    h1, h2 { color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,.2); }
+    button {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform .2s;
+    }
+    button:hover { transform: scale(1.05); }
+    .yes { background: #ff4d6d; color: white; }
+    .no {
+      background: white;
+      color: #ff4d6d;
+      position: absolute;
+    }
+    .form-card {
+      background: rgba(255,255,255,.25);
+      backdrop-filter: blur(10px);
+      padding: 25px;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 100%;
+      color: white;
+    }
+    .form-card input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: none; }
+    .choices img {
+      width: 90px;
+      border-radius: 15px;
+      cursor: pointer;
+      margin: 5px;
+      border: 3px solid transparent;
+    }
+    .choices img.selected { border-color: #ff4d6d; }
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 25px;
+      max-width: 420px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.2);
+    }
+    .card h2 { color: #ff4d6d; }
+    .heart {
+      position: fixed;
+      color: #ff4d6d;
+      font-size: 14px;
+      animation: float 1.5s linear forwards;
+      pointer-events: none;
+    }
+    @keyframes float {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-40px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page active" id="page1">
+    <h1>Will you be my girlfriend? 💖</h1>
+    <div style="margin-top:30px; position: relative; height: 120px; width: 300px;">
+      <button class="yes" onclick="goToPage(2)">Yes I do 💕</button>
+      <button class="no" id="noBtn">No, leave me alone</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page" id="page2">
+    <h2>Let's plan our date ✨</h2>
+    <div class="form-card">
+      <label>Date</label>
+      <input type="date" id="date" />
+      <label>Time</label>
+      <input type="time" id="time" />
+      <p>Choose our date idea</p>
+      <div class="choices">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300" onclick="selectChoice(this,'Pizza')" />
+        <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=300" onclick="selectChoice(this,'London')" />
+        <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?w=300" onclick="selectChoice(this,'Movie')" />
+      </div>
+      <button class="yes" onclick="goToPage(3)" style="margin-top:20px">Continue 💘</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="page" id="page3">
+    <div class="card">
+      <h2>Our Date 💗</h2>
+      <p id="result"></p>
+      <p>I can't wait to spend this moment with you 🥰</p>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const pages = document.querySelectorAll('.page');
+    let choice = '';
+
+    noBtn.addEventListener('mouseenter', () => {
+      const x = Math.random() * 200;
+      const y = Math.random() * 80;
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    });
+
+    function goToPage(num) {
+      pages.forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + num).classList.add('active');
+      if (num === 3) {
+        document.getElementById('result').innerHTML = `📅 <b>${date.value}</b><br>⏰ <b>${time.value}</b><br>💡 <b>${choice}</b>`;
+      }
+    }
+
+    function selectChoice(el, val) {
+      document.querySelectorAll('.choices img').forEach(img => img.classList.remove('selected'));
+      el.classList.add('selected');
+      choice = val;
+    }
+
+    document.addEventListener('mousemove', e => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = '❤';
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1500);
+    });
+  </script>
+</body>
+</html>
