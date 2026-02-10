@@ -1,0 +1,27 @@
+// NO BUTTON KABUR
+const noBtn = document.getElementById("noBtn");
+if (noBtn) {
+  noBtn.addEventListener("mouseover", () => {
+    noBtn.style.left = Math.random() * 300 + "px";
+    noBtn.style.top = Math.random() * 300 + "px";
+  });
+}
+
+// YES CLICKED → EMAIL MASUK
+function yesClicked() {
+  emailjs.send("SERVICE_ID", "TEMPLATE_YES", {
+    message: "DIA KLIK YES I DO 💖"
+  });
+
+  window.location.href = "date.html";
+}
+
+// DATE FILLED → EMAIL MASUK
+function saveDate() {
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+  const idea = document.querySelector('input[name="idea"]:checked')?.value;
+
+  emailjs.send("SERVICE_ID", "TEMPLATE_DATE", {
+    date: date,
+    t
